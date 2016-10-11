@@ -1,0 +1,22 @@
+let rec check_at_pos(x : str * (str * (int * int))) : bool =
+  let a = fst(x) in 
+  let b = fst (snd(x)) in
+  let start_pos = fst (snd (snd (x))) in
+  let i = snd (snd (snd (x))) in 
+  if(i == length(b)) then true
+  else if index(a, start_pos + i) == index(b,i) then
+  check_at_pos((a, (b, (start_pos, i+1)))) else false
+in
+let rec check_substring(x : str * (str * int)) : bool = 
+  let a = fst(x) in
+  let b = fst(snd(x)) in
+  let i = snd(snd(x)) in
+  if(i + length(b) == length(a)) then false
+  else if check_at_pos(( a, (b, (i, 0)) )) then true
+  else check_substring(( a, (b, i+1) ))
+in
+\x:(str * str).( 
+  let a = fst(x) in
+  let b = snd(x) in
+  check_substring(b, (a, 0))
+)
